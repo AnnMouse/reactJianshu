@@ -14,7 +14,7 @@ import {
 import {
   SEARCH_FOCUS,
   SEARCH_BLUR
-} from '../../store/createActionTypes';
+} from './store/createActionTypes';
 
 const Header = (props) => {
   return (
@@ -64,7 +64,7 @@ const Header = (props) => {
 //　表示组件和store做连接接时，store如何映射到props
 const mapStateToProps = (state) => {
   return {
-    focused: state.focused
+    focused: state.header.focused
   }
 }
 // 表示组件和store做连接时，组件要改变store的内容，要定义dispatch方法
