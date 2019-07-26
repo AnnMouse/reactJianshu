@@ -124,4 +124,45 @@ export const Button = styled.div`
     background: rgb(234, 111, 90);
   }
 `
+
+export const SearchInfo = styled.div`
+  position: absolute;
+  left: 0;
+  top: 56px;
+  padding: 0 20px;
+  margin-left: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,.2);
+`
+
+export const SearchInfoTitle = styled.div`
+  margin-top: 20px;
+  margin-bottom: 15px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #969696;
+  width: 210px;
+`
+
+export const SearchInfoSwitch = styled.span`
+  font-size: 13px;
+  float: right;
+`
+
+export const SearchInfoList = styled.div`
+  overflow: hidden;
+  width: 210px;
+`
+
+export const SearchInfoItem = styled.a`
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: block;
+  float: left;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: #787878;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  line-height: 20px;
+`
     

@@ -10,7 +10,12 @@ import {
   NavSearch,
   Addition,
   Button,
-  SearchWrapper
+  SearchWrapper,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoList,
+  SearchInfoItem
 } from './style';
 
 const Header = (props) => {
@@ -45,6 +50,23 @@ const Header = (props) => {
           <span 
             className={props.focused ? 'focused iconfont': 'iconfont'}>&#xe60e;
           </span>
+          {/* { ! props.focused ? null :       */}
+            <SearchInfo>
+              <SearchInfoTitle>
+                热门搜索
+                <SearchInfoSwitch>换一批</SearchInfoSwitch>
+              </SearchInfoTitle>
+              <SearchInfoList>
+                <ul>
+                  <SearchInfoItem>教育</SearchInfoItem>
+                  <SearchInfoItem>生活</SearchInfoItem>
+                  <SearchInfoItem>小程序</SearchInfoItem>
+                  <SearchInfoItem>区块链</SearchInfoItem>
+                  <SearchInfoItem>理财</SearchInfoItem>
+                </ul> 
+              </SearchInfoList>          
+            </SearchInfo>
+          {/* } */}
         </SearchWrapper>
       </Nav>
       <Addition>
