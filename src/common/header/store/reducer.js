@@ -1,22 +1,17 @@
-import {
-  SEARCH_FOCUS,
-  SEARCH_BLUR
-} from './createActionTypes';
+import * as actionTypes from './createActionTypes';
+import { fromJS } from 'immutable';
 
-const defaultStore = {
+const defaultStore = fromJS({
   focused: false
-};
+});
 
 export default (state = defaultStore, action) => {
-  const newState = JSON.parse(JSON.stringify(state));
-  if(action.type === SEARCH_FOCUS){
-    newState.focused = true;
-    return newState;
+  if(action.type === actionTypes.SEARCH_FOCUS){
+    return state.set('focused',true);
   }
 
-  if(action.type === SEARCH_BLUR){
-    newState.focused = false;
-    return newState;
+  if(action.type === actionTypes.SEARCH_BLUR){
+    return state.set('focused',false);
   }
 
   return state;

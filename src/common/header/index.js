@@ -61,7 +61,7 @@ const Header = (props) => {
 //　表示组件和store做连接接时，store如何映射到props
 const mapStateToProps = (state) => {
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused')
   }
 }
 // 表示组件和store做连接时，组件要改变store的内容，要定义dispatch方法
