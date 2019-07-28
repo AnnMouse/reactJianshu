@@ -20,7 +20,23 @@ import {
 
 class Header extends Component{
   render() {
-    const { focused, handleInputBlur, handleInputFocus, list } = this.props;
+    const { 
+      focused, 
+      handleInputBlur, 
+      handleInputFocus, 
+      list, 
+      page, totalPage,
+      handleMouseOut,
+      handleMouseEnter,
+      handleChangePage,
+      mouseIn } = this.props;
+    const showList = [];
+    const jsList = list.toJS();
+    if(jsList.length){
+      for(let i=(page-1) *3 ;i < page *3;i++){
+        if(jsList[i]){showList.push(jsList[i]);}
+      }
+    }
     return (
       <HeaderWrapper>
         {/* href=/ 表示点击回到首页*/}
@@ -45,22 +61,32 @@ class Header extends Component{
             >
               <NavSearch 
                 className={focused ? 'focused': ''}
-                onFocus={handleInputFocus}
+                onFocus={() => handleInputFocus(list)}
                 onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
             <span 
-              className={focused ? 'focused iconfont': 'iconfont'}>&#xe60e;
+              className={focused ? 'focused iconfont zoom': 'iconfont zoom'}>&#xe60e;
             </span>
-            { ! focused ? null :      
-              <SearchInfo>
+            { !focused && !mouseIn ? null :      
+              <SearchInfo 
+                onMouseEnter = {handleMouseEnter}
+                onMouseLeave = {handleMouseOut}
+              >
                 <SearchInfoTitle>
                   热门搜索
-                  <SearchInfoSwitch>换一批</SearchInfoSwitch>
+                  <SearchInfoSwitch 
+                    onClick = {() => handleChangePage(page,totalPage,this.spinIcon)}
+                  >
+                    <i
+                      className='iconfont spin'
+                      ref = {(icon) => this.spinIcon = icon }
+                    >&#xe6e1;</i>
+                    换一批</SearchInfoSwitch>
                 </SearchInfoTitle>
                 <SearchInfoList>
                   { 
-                    list && list.map((item) => 
+                    showList && showList.map((item) => 
                     <SearchInfoItem key={item}>{item}</SearchInfoItem>
                   )}
                 </SearchInfoList>          
@@ -84,18 +110,42 @@ const mapStateToProps = (state) => {
   return {
     // focused: state.get('header').get('focused')
     focused:state.getIn(['header', 'focused']),
-    list: state.getIn(['header', 'list'])
+    list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
   }
 }
 // 表示组件和store做连接时，组件要改变store的内容，要定义dispatch方法
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getSearchInfoList())
+    handleInputFocus(list) {
+      (list.size === 0) && dispatch(actionCreators.getSearchInfoList());
       dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
+    },
+    handleMouseEnter() {
+      dispatch(actionCreators.mouseEnter());
+    },
+    handleMouseOut() {
+      dispatch(actionCreators.mouseOut());
+    },
+    handleChangePage(page, totalPage,spinIcon) {
+      let originAngle = spinIcon.style.transform.replace(/[^0-9]/ig,'');
+      if(originAngle){
+        originAngle = parseInt(originAngle, 10);
+      }else{
+        originAngle = 0;
+      }
+      console.log(originAngle);
+      spinIcon.style.transform = 'rotate('+ (originAngle + 360)+'deg)';
+      if(page < totalPage){
+        dispatch(actionCreators.changePage(page + 1));
+      }else{
+        dispatch(actionCreators.changePage(1));
+      }      
     }
   }
 }

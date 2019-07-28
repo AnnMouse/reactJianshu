@@ -44,4 +44,9 @@ export const ResetGlobalStyled = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 `;
